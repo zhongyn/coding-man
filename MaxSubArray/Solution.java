@@ -16,9 +16,6 @@ public class Solution {
        return max;
     }
 
-    public int maxSubArray1(int[] nums) {
-        return maxArray(nums, 0, nums.length - 1)[1];   
-    }
 
     public int[] maxArray(int[] nums, int a, int b) {
         int[] re = new int[2];
