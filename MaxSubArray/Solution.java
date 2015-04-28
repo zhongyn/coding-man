@@ -17,34 +17,7 @@ public class Solution {
     }
 
 
-    public int[] maxArray(int[] nums, int a, int b) {
-        int[] re = new int[2];
-        if (a == b) {
-            re[0] = 1;
-            re[1] = nums[a];
-            return re;
-        }
-
-        int m = (a + b) / 2;
-
-        int[] left = maxArray(nums, a, m);
-        int[] right = maxArray(nums, m + 1, b);
-
-        int sum = left[1] + right[1];
-        if (sum >= left[1] && sum >= right[1]) {
-            re[0] = 1;
-            re[1] = sum;
-        } else if (left[1] > right[1]) {
-            re[0] = 0;
-            re[1] = left[1];
-        } else {
-            re[0] = 1;
-            re[1] = right[1];
-        }
-        return re;
-    }
-
-    public int maxSubArray2(int[] nums) {
+    public int maxSubArray(int[] nums) {
         int result = nums[0];
         int maxSum = nums[0];
         for (int i = 1; i < nums.length; i++) {
@@ -56,6 +29,78 @@ public class Solution {
         return result;
      }
 
+    public int maxSubArray(int[] A) {
+        return findMax(A, 0, A.length - 1);
+    }
+
+    public int findMax(int[] A, int a, int b) {
+        if (a >= b) {
+            return A[a];
+        }
+        int m = (a + b) / 2;
+        int left = findMax(A, a, m - 1);
+        int right = findMax(A, m + 1, b);
+
+        int p = m;
+        int maxSuffix = A[m];
+        int maxSoFarSuf = A[m];
+        while (p > a) {
+            p--;
+            maxSuffix += A[p];
+            if (maxSuffix > maxSoFarSuf) {
+                maxSoFarSuf = maxSuffix;
+            }
+        }
+        p = m;
+        int maxPrefix = A[m];
+        int maxSoFarPre = A[m];
+        while (p < b) {
+            p++;
+            maxPrefix += A[p];
+            if (maxPrefix > maxSoFarPre) {
+                maxSoFarPre = maxPrefix;
+            }
+        }
+        return Math.max(Math.max(left, right), maxSoFarPre + maxSoFarSuf - A[m]);
+    }
+
+
+    public int maxProduct(int[] nums) {
+        int maxEndHere = nums[0];
+        int minEndHere = nums[0];
+        int maxSoFar = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int a = maxEndHere * nums[i];
+            int b = minEndHere * nums[i];
+            maxEndHere = max(a, b, nums[i]);
+            minEndHere = min(a, b, nums[i]);
+            if (maxSoFar < maxEndHere) {
+                maxSoFar = maxEndHere;
+            }
+        }
+        return maxSoFar;
+    }
+
+    public int max(int a, int b, int c) {
+        if (a < b) {
+            a = b;
+        }
+        if (a < c) {
+            a = c;
+        }
+        return a;
+    }
+
+    public int min(int a, int b, int c) {
+        if (a > b) {
+            a = b;
+        }
+        if (a > c) {
+            a = c;
+        }
+        return a;
+
+    }
 
     public static void main(String[] args) {
         int[] a = {4, -1, 2, 1};

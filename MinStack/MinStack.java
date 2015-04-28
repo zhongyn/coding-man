@@ -30,7 +30,7 @@ class MinStack {
             n.greater.less = n;
         }
 
-     }
+    }
 
     public void pop() {
         Node h = head.next;
@@ -59,4 +59,67 @@ class MinStack {
         System.out.println(st.getMin());
     }
 }
+
+class MinStack {
+    private Deque<Integer> stack = new LinkedList<>();
+    private int min;
+
+    public void push(int x) {
+        if (stack.size() == 0) {
+            min = x;
+            stack.push(x - min);
+        } else {
+            stack.push(x - min);
+             if (x < min) {
+                min = x;
+            }
+        }
+    }
+
+    public void pop() {
+        int x = stack.peek();
+        if (x < 0) {
+            min = min - x;
+        }
+        stack.pop();
+    }
+
+    public int top() {
+        int x = stack.peek();
+        return x > 0 ? x + min : min - x;
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+
+class MinStack {
+    private Deque<Integer> stack = new LinkedList<>();
+    private int min;
+
+    public void push(int x) {
+        if (stack.size() == 0) {
+            min = x;
+        }
+        stack.push(min);
+        stack.push(x);
+        min = Math.min(min, x);
+    }
+
+    public void pop() {
+        stack.pop();
+        min = stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+
+
 
