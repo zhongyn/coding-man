@@ -32,7 +32,7 @@ public class ReorderList {
 
     public void reorderList(ListNode head) {
         if (head == null) {
-            return ;
+            return;
         }
         ListNode m = findMiddle(head);
         ListNode right = m.next;
