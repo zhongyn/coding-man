@@ -89,6 +89,5 @@ public class Solution {
             System.out.println(re.val);
             re = re.next;
         }
-
     }
 }
