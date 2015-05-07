@@ -82,7 +82,7 @@ public class Solution {
             List<String> cur = new ArrayList<>();
             for (int j = i + 1; j <= len; j++) {
                 String w = s.substring(i, j);
-                if (wordDict.contains(w) {
+                if (wordDict.contains(w)) {
                     for (String word : map.get(j)) {
                         cur.add(w + (word.isEmpty() ? "" : " ") + word);
                     }
