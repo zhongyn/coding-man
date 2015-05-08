@@ -57,6 +57,7 @@ public class Subsets {
         }
         return result;
     }
+    
     public static void main(String[] args) {
         int[] a = {2,2,2,2,2};
         Subsets s = new Subsets();

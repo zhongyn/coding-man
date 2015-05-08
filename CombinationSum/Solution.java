@@ -68,7 +68,9 @@ public class Solution {
             for (List<Integer> ls : next) {
                 ls.add(A[i]);
                 result.add(ls);
+                System.out.println(ls);
             }     
+            System.out.println();
             while (i > 0 && A[i] == A[i - 1]) {
                 i--;
             }       

@@ -21,6 +21,11 @@ public class Solution {
                 // System.out.println(newP);
             }
         }
+        while (n < nums.length - 1 && nums[n] == nums[n + 1]) {
+            n++;
+        }
+
+
         return result;
     }
 
@@ -53,9 +58,39 @@ public class Solution {
         nums[b] = tmp;
     }
 
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        findPermuteUnique(nums, 0, result);
+        return result;        
+    }
+    public void findPermuteUnique(int[] nums, int start, List<List<Integer>> result) {
+        if (start == nums.length - 1) {
+            List<Integer> ls = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                ls.add(nums[i]);
+            }
+            result.add(ls);
+        }
+
+        for (int i = start; i < nums.length; i++) {
+            if (i != start && nums[i] == nums[start]) {
+                continue;
+            }
+            swap(nums, start, i);
+            findPermuteUnique(nums, start + 1, result);
+            // swap(nums, start, i);
+
+        }
+    }
+
     public static void main(String[] args) {
-        int[] a = {1,2,3};
+        int[] a = {-1,-1,3,3};
         Solution so = new Solution();
-        so.permute(a);
+        List<List<Integer>> re = so.permuteUnique(a);
+        // so.permute(a);
+        for (List<Integer> ls : re) {
+            System.out.println(ls);
+        }
     }
 }
