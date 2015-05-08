@@ -60,29 +60,34 @@ public class Solution {
 
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        Arrays.sort(nums);
-        findPermuteUnique(nums, 0, result);
+        List<Integer> ls = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            ls.add(nums[i]);
+        }
+        ls.sort(null);
+        findPermuteUnique(ls, 0, result);
         return result;        
     }
-    public void findPermuteUnique(int[] nums, int start, List<List<Integer>> result) {
-        if (start == nums.length - 1) {
-            List<Integer> ls = new ArrayList<>();
-            for (int i = 0; i < nums.length; i++) {
-                ls.add(nums[i]);
-            }
+    public void findPermuteUnique(List<Integer> ls, int start, List<List<Integer>> result) {
+        if (start == ls.size() - 1) {
             result.add(ls);
         }
 
-        for (int i = start; i < nums.length; i++) {
-            if (i != start && nums[i] == nums[start]) {
+        for (int i = start; i < ls.size(); i++) {
+            if (i != start && ls.get(i) == ls.get(start)) {
                 continue;
             }
-            swap(nums, start, i);
-            findPermuteUnique(nums, start + 1, result);
-            // swap(nums, start, i);
-
+            swap(ls, start, i);
+            findPermuteUnique(new ArrayList<>(ls), start + 1, result);
         }
     }
+
+    public void swap(List<Integer> ls, int a, int b) {
+        int tmp = ls.get(a);
+        ls.set(a, ls.get(b));
+        ls.set(b, tmp);
+    }
+
 
     public static void main(String[] args) {
         int[] a = {-1,-1,3,3};
