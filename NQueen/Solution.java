@@ -12,18 +12,19 @@ public class Solution {
 
     public String[] drawPattern(List<Integer> p, int n) {
         String[] chess = new String[n];
-        StringBuilder sb = new StringBuilder();
+        char[] row = new char[n];
+        Arrays.fill(row, '.');
         for (int i = 0; i < n; i++) {
-            sb.append('.');
+            row[p.get(i)] = 'Q';
+            chess[i] = String.valueOf(row);
+            row[p.get(i)] = '.';
         }
-        for (int i = 0; i < n; i++) {
-            sb.setCharAt(p.get(i), 'Q');
-            chess[i] = sb.toString();
-            sb.setCharAt(p.get(i), '.');
-            System.out.println(chess[i]);
-        }
-        System.out.println();
         return chess;
+    }
+
+    public int totalNQueens(int n) {
+        List<List<Integer>> allPaths = backtrack(n, n);
+        return allPaths.size();
     }
 
     public List<List<Integer>> backtrack(int rows, int col) {
@@ -59,8 +60,9 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        int n = 9;
+        int n = 4;
         Solution so = new Solution();
         so.solveNQueens(n);
+        // System.out.println(so.totalNQueens(n));
     }
 }
