@@ -24,11 +24,7 @@ public class Solution {
             return;
         }
         dfs(node.left);
-        if (node.left == null && pre == null) {
-            pre = node;
-            return;
-        }
-        if (node.val < pre.val) {
+        if (pre != null && node.val < pre.val) {
             if (one == null) {
                 one = pre;
             }
@@ -36,5 +32,51 @@ public class Solution {
         }
         pre = node;
         dfs(node.right);
+    }
+
+    public void recoverTree(TreeNode root) {
+        TreeNode one = null;
+        TreeNode two = null;
+        TreeNode pre = null;
+
+        TreeNode cur = root;
+        TreeNode tmp = null;
+
+        while (cur != null) {
+            if (cur.left == null) {
+                if (pre != null && cur.val < pre.val) {
+                    if (one == null) {
+                        one = pre;
+                    }
+                    two = cur;
+                }
+                pre = cur;
+                cur = cur.right;
+            } else {
+                tmp = cur.left;
+                while (tmp.right != null && tmp.right != cur) {
+                    tmp = tmp.right;
+                }
+
+                if (tmp.right == null) {
+                    tmp.right = cur;
+                    cur = cur.left;
+                } else {
+                    tmp.right = null;
+                    if (cur.val < pre.val) {
+                        if (one == null) {
+                            one = pre;
+                        }
+                        two = cur;
+                    }
+                    pre = cur;
+                    cur = cur.right;
+                }
+            }
+        }
+
+        int v = one.val;
+        one.val = two.val;
+        two.val = v;
     }
 }
