@@ -70,6 +70,6 @@ public class Solution {
                 stack.push(node.left);
             }
         }
-
-
+        return result;
+    }
 }

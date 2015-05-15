@@ -20,6 +20,24 @@ public class Solution1 {
         return water;
     }
 
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int maxSoFar = 0;
+
+        while (left < right) {
+            maxSoFar = Math.max(maxSoFar, (right - left) * Math.min(height[left], height[right]));
+            
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return maxSoFar;
+    }
+
     public static void main(String[] args) {
         int[] high = {0,1,0,2,1,0,1,3,2,1,2,1};
         System.out.println(new Solution1().trap(high)); 
