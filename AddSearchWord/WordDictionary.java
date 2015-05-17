@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class WordDictionary {
-    class Node {
-        boolean wordEnd;
-        Map<Character, Node> map = new HashMap<>();
+    private static class Node {
+        private boolean wordEnd;
+        private Map<Character, Node> map = new HashMap<>();
     }
 
     private Node root;
