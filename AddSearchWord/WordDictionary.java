@@ -1,18 +1,11 @@
 import java.util.*;
 
-class Node {
-    char val;
-    boolean wordEnd;
-    Map<Character, Node> map = new HashMap<>();
-
-    public Node() {}
-
-    public Node(char v) {
-        val = v;
-    }
-}
-
 public class WordDictionary {
+    class Node {
+        boolean wordEnd;
+        Map<Character, Node> map = new HashMap<>();
+    }
+
     private Node root;
 
     public WordDictionary() {
@@ -25,7 +18,7 @@ public class WordDictionary {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (!node.map.containsKey(c)) {
-                node.map.put(c, new Node(c));
+                node.map.put(c, new Node());
             }
             node = node.map.get(c);
         }
@@ -38,7 +31,7 @@ public class WordDictionary {
         return backtrack(word, root);
     }
 
-    public boolean backtrack(String word, Node node) {
+    private boolean backtrack(String word, Node node) {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
@@ -61,7 +54,7 @@ public class WordDictionary {
     public static void main(String[] args) {
         WordDictionary wordDictionary = new WordDictionary();
         wordDictionary.addWord("word");
-        boolean re = wordDictionary.search("wor");    
+        boolean re = wordDictionary.search("word");    
         System.out.println(re);
     }
 

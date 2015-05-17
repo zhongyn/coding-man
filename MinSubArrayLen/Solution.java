@@ -59,6 +59,9 @@ public class Solution {
         for (int i = 0; i < nums.length; i++) {
 
             int end = binarySearch(nums, i + 1, sum[i] + s);
+            if (end == nums.length) {
+                break;
+            }
             minLen = Math.min(minLen, end - i);
 
         }
