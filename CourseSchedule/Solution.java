@@ -35,6 +35,48 @@ public class Solution {
         return count == numCourses;
     }
 
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> map = new ArrayList<>(numCourses);
+        int[] numParents = new int[numCourses];
+
+        for (int i = 0; i < numCourses; i++) {
+            map.add(new ArrayList<>());
+        }
+        for (int i = 0; i < prerequisites.length; i++) {
+            map.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            numParents[prerequisites[i][0]]++;
+        }
+
+        Queue<Integer> ls = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (numParents[i] == 0) {
+                ls.add(i);
+            }
+        }
+
+        List<Integer> order = new ArrayList<>();
+        while (!ls.isEmpty()) {
+            int course = ls.remove();
+            order.add(course);
+            for (int i : map.get(course)) {
+                numParents[i]--;
+                if (numParents[i] == 0) {
+                    ls.add(i);
+                }
+            }
+        }
+
+        if (order.size() == numCourses) {
+            int[] result = new int[numCourses];
+            for (int i = 0; i < numCourses; i++) {
+                result[i] = order.get(i);                
+            }       
+            return result;     
+        }
+
+        return new int[0];
+    }
+
     public boolean canFinish1(int numCourses, int[][] prerequisites) {
         int[] finished = new int[numCourses];
         List<List<Integer>> map = new ArrayList<>(numCourses);
@@ -77,5 +119,7 @@ public class Solution {
         int[][] p = {{2,0},{0,1}};
         Solution so = new Solution();
         System.out.println(so.canFinish1(n, p));
+        int[] order = so.findOrder(n, p);
+        System.out.println(Arrays.toString(order));
     }
 }

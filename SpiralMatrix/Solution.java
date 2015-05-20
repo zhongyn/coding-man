@@ -41,13 +41,47 @@ public class Solution {
         return spiral;
     }
 
+    public int[][] generateMatrix(int n) {
+        int[][] m = new int[n][n];
+        int level = (n + 1) / 2;
+        int count = 1;
+
+        for (int i = 0; i < level; i++) {
+            int left = i;
+            int right = n - i - 1;
+            int up = i;
+            int down = n - i - 1;
+
+            for (int j = left; j <= right; j++) {
+                m[up][j] = count++;
+            }
+
+            for (int j = up + 1; j <= down; j++) {
+                m[j][right] = count++;
+            }
+
+            for (int j = right - 1; j >= left; j--) {
+                m[down][j] = count++;
+            }
+
+            for (int j = down - 1; j >= up + 1; j--) {
+                m[j][left] = count++;
+            }
+        }
+        return m;
+    }
+
     public static void main(String[] args) {
         int[][] m = {{1,2,3}, {4,5,6}, {7,8,9}, {10,11,12}};
         int[][] k = {{6,7,8}};
         int[][] n = {{6},{7},{8}};
 
         Solution so = new Solution();
-        System.out.println(so.spiralOrder(n));
+        // System.out.println(so.spiralOrder(n));
+        int[][] re = so.generateMatrix(10);
+        for (int[] row : re) {
+            System.out.println(Arrays.toString(row));
+        }
     }
 
 }
