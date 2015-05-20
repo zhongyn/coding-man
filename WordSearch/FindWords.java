@@ -39,11 +39,12 @@ public class FindWords {
 
     public static void main(String[] args) {
         char[][] table = {{'a', 'a'}, {'b', 'c'}};
-        // char[][] table = {{'b','b','a','a','b','a'},{'b','b','a','b','a','a'},{'b','b','b','b','b','b'},{'a','a','a','b','a','a'},{'a','b','a','a','b','b'}};
-        String[] s = {"aacb", "bcaa"};
-        // String[] s = {"abbbababaa"};
+        String[] s = {"aacb", "c"};
+        char[][] a = {{'b','b','a','a','b','a'},{'b','b','a','b','a','a'},{'b','b','b','b','b','b'},{'a','a','a','b','a','a'},{'a','b','a','a','b','b'}};
+        String[] b = {"abbbababaa"};
         FindWords fw = new FindWords();
-        System.out.println(fw.findWords(table, s));
+        // System.out.println(fw.findWords(table, s));
+        System.out.println(fw.findWords(a, b));
     }
 }
 
@@ -53,52 +54,22 @@ class WordDict {
     }
 
     private Node root;
-    private char[][] table;
 
-    public WordDict(char[][] board) {
+    public WordDict() {
         root = new Node();
-        table = board;
-        buildDict();
     }
 
-    // public void addWord(String word) {
-    //     Node node = root;
-    //     for (int i = 0; i < word.length(); i++) {
-    //         char c = word.charAt(i);
-    //         if (node.map[c - 'a'] == null) {
-    //             node.map[c - 'a'] = new Node();
-    //         }
-    //         node = node.map[c - 'a'];
-    //     }
-    // }
-
-    private void buildDict() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[0].length; j++) {
-                boolean[][] visited = new boolean[table.length][table[0].length];
-                build(i, j, visited, root);
+    public void addWord(String word) {
+        Node node = root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (node.map[c - 'a'] == null) {
+                node.map[c - 'a'] = new Node();
             }
-        }        
+            node = node.map[c - 'a'];
+        }
     }
 
-    private void build(int i, int j, boolean[][] visited, Node node) {
-        if (i < 0 || i == table.length || j < 0 || j == table[0].length || visited[i][j]) {
-           return;
-        }
- 
-        char c = table[i][j];
-        if (node.map[c - 'a'] == null) {
-            node.map[c - 'a'] = new Node();
-        }
-        Node child = node.map[c - 'a'];
-
-        visited[i][j] = true;
-        build(i + 1, j, visited, child);
-        build(i, j - 1, visited, child);
-        build(i - 1, j, visited, child);
-        build(i, j + 1, visited, child);
-        visited[i][j] = false;
-    }
 
     public boolean searchWord(String word) {
         Node node = root;
