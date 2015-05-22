@@ -23,7 +23,7 @@ public class FindWordsWithTrie {
         char[][] table = {{'a', 'a'}, {'b', 'c'}};
         String[] s = {"aacb", "c"};
         char[][] a = {{'b','b','a','a','b','a'},{'b','b','a','b','a','a'},{'b','b','b','b','b','b'},{'a','a','a','b','a','a'},{'a','b','a','a','b','b'}};
-        String[] b = {"abbbababaa"};
+        String[] b = {"bbaabaabaaaaabaababaaaaababb"};
         FindWordsWithTrie fw = new FindWordsWithTrie();
         // System.out.println(fw.findWords(table, s));
         System.out.println(fw.findWords(a, b));
@@ -50,16 +50,9 @@ class WordDict {
         boolean[][] visited = new boolean[table.length][table[0].length];
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[0].length; j++) {
-                initArray(visited);
                 build(i, j, visited, root, 1);
             }
         }        
-    }
-
-    private void initArray(boolean[][] visited) {
-        for (int i = 0; i < visited.length; i++) {
-            Arrays.fill(visited[i], false);
-        }
     }
 
     private void build(int i, int j, boolean[][] visited, Node node, int depth) {

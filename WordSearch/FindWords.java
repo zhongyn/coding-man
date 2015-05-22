@@ -15,9 +15,9 @@ public class FindWords {
     }
 
     public void buildDict(char[][] board, WordDict dict) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                boolean[][] visited = new boolean[board.length][board[0].length];
                 build(board, i, j, "", dict, visited);
             }
         }
@@ -43,8 +43,8 @@ public class FindWords {
         char[][] a = {{'b','b','a','a','b','a'},{'b','b','a','b','a','a'},{'b','b','b','b','b','b'},{'a','a','a','b','a','a'},{'a','b','a','a','b','b'}};
         String[] b = {"abbbababaa"};
         FindWords fw = new FindWords();
-        // System.out.println(fw.findWords(table, s));
-        System.out.println(fw.findWords(a, b));
+        System.out.println(fw.findWords(table, s));
+        // System.out.println(fw.findWords(a, b));
     }
 }
 

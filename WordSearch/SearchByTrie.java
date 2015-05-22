@@ -4,33 +4,30 @@ public class SearchByTrie {
 
     private WordDict dict;
     private char[][] table;
-    private List<String> result;
+    private Set<String> result;
 
     public List<String> findWords(char[][] board, String[] words) {
         dict = new WordDict();
-        result = new ArrayList<>();
+        result = new HashSet<>();
         table = board;
-        int maxLen = 0;
 
         for (int i = 0; i < words.length; i++) {
             dict.addWord(words[i]);
-            maxLen = Math.max(maxLen, words[i].length());
         }
 
         boolean[][] visited = new boolean[table.length][table[0].length];
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[0].length; j++) {
-                backtrack(i, j, "", visited, maxLen);
+                backtrack(i, j, "", visited);
             }
         }
-        return result;
+        return new ArrayList<>(result);
     }
 
-    public void backtrack(int i, int j, String s, boolean[][] visited, int depth) {
-        if (i < 0 || i == table.length || j < 0 || j == table[0].length || visited[i][j] || depth == 0) {
+    public void backtrack(int i, int j, String s, boolean[][] visited) {
+        if (i < 0 || i == table.length || j < 0 || j == table[0].length || visited[i][j]) {
             return;
         }
-        visited[i][j] = true;
         s += table[i][j];
         if (!dict.searchPrefix(s)) {
             return;
@@ -38,10 +35,11 @@ public class SearchByTrie {
         if (dict.searchWord(s)) {
             result.add(s);
         }
-        backtrack(i + 1, j, s, visited, depth - 1);
-        backtrack(i, j - 1, s, visited, depth - 1);
-        backtrack(i - 1, j, s, visited, depth - 1);
-        backtrack(i, j + 1, s, visited, depth - 1);
+        visited[i][j] = true;
+        backtrack(i + 1, j, s, visited);
+        backtrack(i, j - 1, s, visited);
+        backtrack(i - 1, j, s, visited);
+        backtrack(i, j + 1, s, visited);
         visited[i][j] = false;
     }
 
@@ -50,9 +48,15 @@ public class SearchByTrie {
         String[] s = {"aacb", "c"};
         char[][] a = {{'b','b','a','a','b','a'},{'b','b','a','b','a','a'},{'b','b','b','b','b','b'},{'a','a','a','b','a','a'},{'a','b','a','a','b','b'}};
         String[] b = {"abbbababaa", "bba"};
-        FindWords fw = new FindWords();
+        SearchByTrie fw = new SearchByTrie();
         // System.out.println(fw.findWords(table, s));
         System.out.println(fw.findWords(a, b));
+
+        // WordDict dict = new WordDict();
+        // dict.addWord("abc");
+        // System.out.println(dict.searchPrefix("d"));
+        // System.out.println(dict.searchWord("abc"));
+        
     }
 }
 
@@ -90,7 +94,7 @@ class WordDict {
 
     public boolean searchPrefix(String prefix) {
         Node node = search(prefix);
-        return node == null;
+        return node != null;
     }
 
     private Node search(String word) {
