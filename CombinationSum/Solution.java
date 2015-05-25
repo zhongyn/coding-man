@@ -102,6 +102,32 @@ public class Solution {
         return table.get(target);
     }
     
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<List<Integer>>> table = new ArrayList<>(n + 1);
+        table.add(new ArrayList<>());
+        table.get(0).add(new ArrayList<>());
+
+        for (int i = 1; i <= n; i++) {
+            table.add(new ArrayList<>());
+            int j = i < 10 ? i : 9;
+            for (; j > 0; j--) {
+                for (List<Integer> ls : table.get(i - j)) {
+                    if (ls.isEmpty() || (ls.size() < k && ls.get(ls.size() - 1) < j)) {
+                        List<Integer> copy = new ArrayList<>(ls);
+                        copy.add(j);
+                        table.get(i).add(copy);
+                    }
+                }
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (List<Integer> ls : table.get(n)) {
+            if (ls.size() == k) {
+                result.add(ls);
+            }
+        }
+        return result;
+    }
 
     // public List<List<Integer>> combinationSum1(int[] candidates, int target) {
     //     List<List<List<List<Integer>>>> table = new ArrayList<>();
@@ -145,12 +171,33 @@ public class Solution {
     //     return result;
     // }
 
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        List<List<Integer>> tmp;
 
+        for (int i = 0; i < k; i++) {
+            tmp = new ArrayList<>();
+            for (List<Integer> ls : result) {
+                int start = ls.isEmpty() ? 1 : (ls.get(ls.size() - 1) + 1);
+                for (int j = start; j <= n; j++) {
+                    List<Integer> copy = new ArrayList<>(ls);
+                    copy.add(j);
+                    tmp.add(copy);
+                    // System.out.println(copy);
+                }
+            }
+            result = tmp;
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
         int[] a = {1,1,1,2,3,4};
         Solution so = new Solution();
-        List<List<Integer>> re = so.combinationSum2(a, 6);
+        // List<List<Integer>> re = so.combinationSum2(a, 6);
+        // List<List<Integer>> re = so.combinationSum3(3, 9);
+        List<List<Integer>> re = so.combine(4, 2);
         for (List<Integer> p : re) {
             System.out.println(p);
         }
