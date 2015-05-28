@@ -33,10 +33,22 @@ public class Partition {
         return true;
     }
 
+    public int minCut(String s) {
+        List<List<String>> allPaths = partition(s);
+        int min = s.length();
+        for (List<String> ls : allPaths) {
+            if (ls.size() < min) {
+                min = ls.size();
+            }
+        }
+        return min;
+    }
+
     public static void main(String[] args) {
         String s ="aab";
         Partition p = new Partition();
         List<List<String>> re = p.partition(s);
+        System.out.println(p.minCut(s));
         for (List<String> ls : re) {
             System.out.println(ls);
         }
