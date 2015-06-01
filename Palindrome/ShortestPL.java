@@ -17,6 +17,30 @@ public class ShortestPL {
     }
 
     public String shortestPalindrome(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        StringBuilder re = new StringBuilder(s).reverse();
+        sb.append('#').append(re);
+
+        int len = sb.length();
+        int[] table = new int[len + 1];
+        table[0] = -1;
+        int i = 0;
+        int j = table[0];
+
+        while (i < len) {
+            while (j >= 0 && sb.charAt(i) != sb.charAt(j)) {
+                j = table[j];
+            }
+            i++;
+            j++;
+            table[i] = j;
+        }
+
+        re.replace(re.length() - table[len], re.length(), s);
+        return re.toString();
+    }
+
+    public String shortestPalindrome2(String s) {
         if (s.length() < 2) {
             return s;
         }
