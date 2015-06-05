@@ -70,36 +70,38 @@ public class Solution {
             return 0;
         }
         int col = matrix[0].length;
-        int[][][] table = new int[row + 1][col + 1][4];
+        int[] table = new int[col];
         int maxArea = 0;
 
-        for (int i = 1; i <= row; i++) {
-            for (int j = 1; j <= col; j++) {
-                if (matrix[i - 1][j - 1] == '1') {
-                    table[i][j][0] = table[i - 1][j][0] + 1;
-                    table[i][j][1] = table[i][j - 1][1] + 1;
-
-                    int h = Math.min(table[i - 1][j][0], table[i - 1][j - 1][2]) + 1;
-                    int w = Math.min(table[i][j - 1][1], table[i - 1][j - 1][3]) + 1;
-
-                    w = table[i - 1][j][0] == 0 ? table[i][j][1] : w;
-                    h = table[i][j - 1][0] == 0 ? table[i][j][0] : h;
-                    table[i][j][2] = h;
-                    table[i][j][3] = w;
-                    int curMax = Math.max(Math.max(table[i][j][0], table[i][j][1]), h * w);
-                    maxArea = Math.max(maxArea, curMax);
-                    System.out.println("i: " + i);
-                    System.out.println("j: " + j);
-                    System.out.println("w: " + w);
-                    System.out.println("h: " + h);
-
-                    System.out.println(maxArea);
-                    System.out.println();
-                }
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                table[j] = matrix[i][j] == '1' ? table[j] + 1 : 0;
             }
+            maxArea = Math.max(maxArea, largestRectangleArea(table));
         }
         return maxArea;
     }
+
+    public int largestRectangleArea(int[] height) {
+        Deque<Integer> stack = new LinkedList<>();
+        int len = height.length;
+        stack.push(-1);
+        int maxArea = 0;
+
+        for (int i = 0; i <= len; i++) {
+            int h = i == len ? 0 : height[i];
+            while (stack.size() > 1 && height[stack.peek()] > h) {
+                int hei = height[stack.pop()];
+                maxArea = Math.max(maxArea, hei * (i - stack.peek() - 1));
+            }
+            while (i < len - 1 && height[i] == height[i + 1]) {
+                i++;
+            }
+            stack.push(i);
+        }
+        return maxArea;
+    }
+
 
     public int maximalSquare(char[][] matrix) {
         int row = matrix.length;
