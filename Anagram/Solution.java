@@ -16,13 +16,11 @@ public class Solution {
         }
 
         List<String> result = new ArrayList<>();
-
         for (List<String> ls : map.values()) {
             if (ls.size() > 1) {
                 result.addAll(ls);
             }
         }
-
         return result;
     }
 }

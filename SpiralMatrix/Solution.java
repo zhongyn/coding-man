@@ -78,7 +78,7 @@ public class Solution {
 
         Solution so = new Solution();
         // System.out.println(so.spiralOrder(n));
-        int[][] re = so.generateMatrix(10);
+        int[][] re = so.generateMatrix(1);
         for (int[] row : re) {
             System.out.println(Arrays.toString(row));
         }

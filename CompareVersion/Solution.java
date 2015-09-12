@@ -141,6 +141,15 @@ public class Solution {
     //     }
     //     return true;
     // }
+    public class VersionComparator implements Comparator<String, String> {
+        public int compare(String s1, String s2) {
+            return compareVersion(s1, s2);
+        }
+    }
+
+    public void sortVersion(String[] s) {
+        Arrays.sort(s, new VersionComparator());
+    }
 
     public static void main(String[] args) {
         String a = "1.3";

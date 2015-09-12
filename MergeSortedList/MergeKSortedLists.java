@@ -38,12 +38,6 @@ public class Solution {
 class NodeComparator implements Comparator<ListNode> {
     
     public int compare(ListNode a, ListNode b) {
-        if (a.val < b.val) {
-            return -1;
-        }
-        if (a.val > b.val) {
-            return 1;
-        }
-        return 0;
+        return a.val - b.val;
     }
 }

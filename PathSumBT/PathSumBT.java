@@ -22,6 +22,17 @@ public class PathSumBT {
         return dfs(node.left, cur, sum) || dfs(node.right, cur, sum);
     }
 
+    public boolean hasPathSum(TreeNode node, int sum) {
+        if (node == null) {
+            return false;
+        }
+        int cur = sum - node.val;
+        if (cur == 0 && node.left == null && node.right == null) {
+            return true;
+        }
+        return hasPathSum(node.left, cur) || hasPathSum(node.right, cur);
+    }
+
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         if (root == null) {
             return new LinkedList<List<Integer>>();

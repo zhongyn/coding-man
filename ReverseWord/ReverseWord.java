@@ -26,6 +26,7 @@ public class ReverseWord {
         return new String(str);
     }
 
+    
     public void reverse(char[] str, int i, int j) {
         while (i < j) {
             char tmp = str[i];
@@ -55,6 +56,6 @@ public class ReverseWord {
     public static void main(String[] args) {
         String s = "the blue is sky";
         ReverseWord rw = new ReverseWord();
-        System.out.println(rw.reverseWords(" "));
+        System.out.println(rw.reverseWords1(" "));
     }
 }

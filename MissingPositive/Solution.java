@@ -41,4 +41,19 @@ public class Solution {
 
         return 0;
     }
+
+    public int lengthOfLastWord(String s) {
+        int p = s.length() - 1;
+        while (p >= 0 && s.charAt(p) == ' ') {
+            p--;
+        }
+        if (p < 0) {
+            return 0;
+        }
+        int q = p;
+        while (q >= 0 && s.charAt(q) != ' ') {
+            q--;
+        }
+        return p - q;
+    }
 }

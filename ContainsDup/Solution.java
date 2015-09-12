@@ -28,4 +28,42 @@ public class Solution {
         return false;
     }
 
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return false;
+        }
+
+        TreeSet<Integer> ts = new TreeSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            Integer floor = ts.floor(nums[i] + t);
+            Integer ceiling = ts.ceiling(nums[i] - t);
+            if ((floor != null && floor >= nums[i])|| (ceiling != null && ceiling <= nums[i])) {
+                return true;
+            }
+            ts.add(nums[i]);
+            if (i >= k) {
+                ts.remove(nums[i - k]);
+            }
+        }
+        return false;
+    }
+
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return false;
+        }
+
+        TreeSet<Integer> ts = new TreeSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            Integer floor = ts.floor(nums[i] + t);
+            if (floor != null && floor >= nums[i] - t) {
+                return true;
+            }
+            ts.add(nums[i]);
+            if (i >= k) {
+                ts.remove(nums[i - k]);
+            }
+        }
+        return false;
+    }
 }
